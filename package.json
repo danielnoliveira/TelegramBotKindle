@@ -6,5 +6,11 @@
   "repository": "https://github.com/danielnoliveira/TelegramBotKindle.git",
   "author": "Daniel Nogueira de Oliveira",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.51.0"
+  }
 }

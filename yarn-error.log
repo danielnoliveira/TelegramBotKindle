@@ -1,0 +1,45 @@
+Arguments: 
+  /home/daniel/.nvm/versions/node/v15.2.0/bin/node /usr/share/yarn/bin/yarn.js add node-telegram-node-api
+
+PATH: 
+  /home/daniel/.nvm/versions/node/v15.2.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/daniel/.yarn/bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  15.2.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/node-telegram-node-api: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
+      at Request.emit (node:events:329:20)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141721:10)
+      at Request.emit (node:events:329:20)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141643:12)
+      at Object.onceWrapper (node:events:435:28)
+      at IncomingMessage.emit (node:events:341:22)
+      at endReadableNT (node:internal/streams/readable:1294:12)
+      at processTicksAndRejections (node:internal/process/task_queues:80:21)
+
+npm manifest: 
+  {
+    "name": "TelegramBotKindle",
+    "version": "1.0.0",
+    "description": "A bot in Telegram that receive files in format epub or mobi and send it to the user's kindle.",
+    "main": "index.js",
+    "repository": "https://github.com/danielnoliveira/TelegramBotKindle.git",
+    "author": "Daniel Nogueira de Oliveira",
+    "license": "MIT",
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
