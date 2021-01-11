@@ -1,0 +1,10 @@
+{
+  "name": "TelegramBotKindle",
+  "version": "1.0.0",
+  "description": "A bot in Telegram that receive files in format epub or mobi and send it to the user's kindle.",
+  "main": "index.js",
+  "repository": "https://github.com/danielnoliveira/TelegramBotKindle.git",
+  "author": "Daniel Nogueira de Oliveira",
+  "license": "MIT",
+  "private": true
+}
