@@ -1,26 +1,29 @@
 const TelegramBot = require('node-telegram-bot-api');
-var http = require('https');
-var fs = require('fs');
+
+import {downloadFile,removeFile} from './src/Service/FileManager';
+const msgs = require('./src/DefaultTexts/msgs');
+
 const {TELEGRAM_TOKEN} = require('./TokenBot');
+
 const getURLcomplete = (token,file_path)=>{
     return `https://api.telegram.org/file/bot${token}/${file_path}`;
 }
-var download = async function(url, dest, cb) {
-    var file = await fs.createWriteStream(dest);
-    await http.get(url, async function(response) {
-        await response.pipe(file);
-        await file.on('finish', async function() {
-            await file.close(cb);
-        });
-    });
-}
+
 const bot = new TelegramBot(TELEGRAM_TOKEN, {polling:true});
 
-bot.onText(/\/start (.+)/,(msg,match)=>{
+bot.onText(/\/start/,(msg)=>{
     const chatId = msg.chat.id;
-    const resp = match[1];
+    bot.sendMessage(chatId, msgs.start);
+});
+bot.onText(/\/setemail (.+)/,(msg,match)=>{
+    const chatId = msg.chat.id;
     console.log(msg);
-    bot.sendMessage(chatId, 'Ola');
+    const email = match[1];
+    if(msg.entities[1].type==="email"){
+        bot.sendMessage(chatId,"Esse é um email válido");
+    }else{
+        bot.sendMessage(chatId,"Isso não é um email");
+    }
 });
 
 bot.on('document', async (msg)=>{
@@ -28,6 +31,6 @@ bot.on('document', async (msg)=>{
     const file_name = msg.document.file_name;
     console.log(msg);
     const {file_path} = await bot.getFile(msg.document.file_id);
-    await download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./${file_name}`,(err)=>console.log(err?err:'tudo certo'));
+    await downloadFile.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./${file_name}`,(err)=>console.log(err?err:'tudo certo'));
     bot.sendMessage(chatId,'Recebi seu documento');
 })

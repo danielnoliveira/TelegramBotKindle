@@ -1,5 +1,5 @@
 const fs = require('fs');
-async function removeFile(dest) {
+async function remove(dest) {
     try {
         await fs.unlinkSync(dest);
     } catch (err) {
@@ -8,5 +8,5 @@ async function removeFile(dest) {
 }
 
 module.exports = {
-    removeFile
+    remove
 }
