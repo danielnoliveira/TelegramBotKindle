@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
-
-import {downloadFile,removeFile} from './src/Service/FileManager';
+const ebookConverter = require("node-ebook-converter");
+ebookConverter.setPoolSize(10);
+const fileManager = require('./src/Service/FileManager');
 const msgs = require('./src/DefaultTexts/msgs');
 
 const {TELEGRAM_TOKEN} = require('./TokenBot');
@@ -29,8 +30,14 @@ bot.onText(/\/setemail (.+)/,(msg,match)=>{
 bot.on('document', async (msg)=>{
     const chatId = msg.chat.id;
     const file_name = msg.document.file_name;
-    console.log(msg);
     const {file_path} = await bot.getFile(msg.document.file_id);
-    await downloadFile.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./${file_name}`,(err)=>console.log(err?err:'tudo certo'));
-    bot.sendMessage(chatId,'Recebi seu documento');
+    await fileManager.downloadFile.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./books/${file_name}`,(err)=>console.log(err?err:'tudo certo'));
+    if(file_name.slice(-4)==='epub'){
+        ebookConverter.convert({
+            input:`./books/${file_name}`,
+            output:`./books/${file_name.slice(0,-5)}.mobi`,
+        }).then(response => console.log(response))
+        .catch(error=>console.log(error));
+    }
+    bot.sendMessage(chatId,'Documento enviado para o seu Kindle');
 })
