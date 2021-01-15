@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
-const ebookConverter = require("node-ebook-converter");
-ebookConverter.setPoolSize(10);
+
+const calibre = require('./src/Service/EbookConverter');
 const fileManager = require('./src/Service/FileManager');
 const msgs = require('./src/DefaultTexts/msgs');
 
@@ -31,13 +31,13 @@ bot.on('document', async (msg)=>{
     const chatId = msg.chat.id;
     const file_name = msg.document.file_name;
     const {file_path} = await bot.getFile(msg.document.file_id);
-    await fileManager.downloadFile.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./books/${file_name}`,(err)=>console.log(err?err:'tudo certo'));
+    await fileManager.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./books/${file_name}`);
     if(file_name.slice(-4)==='epub'){
-        ebookConverter.convert({
-            input:`./books/${file_name}`,
-            output:`./books/${file_name.slice(0,-5)}.mobi`,
-        }).then(response => console.log(response))
-        .catch(error=>console.log(error));
+        bot.sendMessage(chatId,'Documento não está em formato mobi. Iniciando conversão para o formato mobi.');
+        await calibre.EbookConverter(file_name);
+        bot.sendMessage(chatId,'Conversão finalizada.\nO documento está sendo enviado para o seu Kindle.');
+        
+    }else{
+        bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
     }
-    bot.sendMessage(chatId,'Documento enviado para o seu Kindle');
 })
