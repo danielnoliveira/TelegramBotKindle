@@ -11,5 +11,5 @@ module.exports = {
             "2. Acesse 'Gerencie seu conteúdo e dispositivos'.\n"+
             "3. Acesse a aba 'Preferências'.\n"+
             "4. Vá até o item 'Configurações de documentos pessoais'.\n"+
-            "5. No item 'Lista de e-mails aprovados para o envio de documentos pessoais' adicione o email '_email@kindle.com'.\n",
+            "5. No item 'Lista de e-mails aprovados para o envio de documentos pessoais' adicione o email 'the.postman.of.books@outlook.com'.\n",
 }
