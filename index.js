@@ -2,9 +2,10 @@ const TelegramBot = require('node-telegram-bot-api');
 
 const calibre = require('./src/Service/EbookConverter');
 const fileManager = require('./src/Service/FileManager');
+const postman = require('./src/Service/Postman');
 const msgs = require('./src/DefaultTexts/msgs');
 
-const {TELEGRAM_TOKEN} = require('./TokenBot');
+const {TELEGRAM_TOKEN} = require('./secrets');
 
 const getURLcomplete = (token,file_path)=>{
     return `https://api.telegram.org/file/bot${token}/${file_path}`;
@@ -37,7 +38,7 @@ bot.on('document', async (msg)=>{
         await calibre.EbookConverter(file_name);
         bot.sendMessage(chatId,'Conversão finalizada.\nO documento está sendo enviado para o seu Kindle.');
         
-    }else{
-        bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
     }
+    bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
+    await postman.sendMailTo('',file_name);
 })
