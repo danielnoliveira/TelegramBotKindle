@@ -1,8 +1,11 @@
 const TelegramBot = require('node-telegram-bot-api');
 
+const ReaderModel = require('./src/Database/Model/Readers');
+
 const calibre = require('./src/Service/EbookConverter');
 const fileManager = require('./src/Service/FileManager');
 const postman = require('./src/Service/Postman');
+
 const msgs = require('./src/DefaultTexts/msgs');
 
 const {TELEGRAM_TOKEN} = require('./secrets');
@@ -19,10 +22,10 @@ bot.onText(/\/start/,(msg)=>{
 });
 bot.onText(/\/setemail (.+)/,(msg,match)=>{
     const chatId = msg.chat.id;
-    console.log(msg);
     const email = match[1];
     if(msg.entities[1].type==="email"){
         bot.sendMessage(chatId,"Esse é um email válido");
+        const newReader = new ReaderModel({email,chatId});
     }else{
         bot.sendMessage(chatId,"Isso não é um email");
     }
@@ -39,6 +42,11 @@ bot.on('document', async (msg)=>{
         bot.sendMessage(chatId,'Conversão finalizada.\nO documento está sendo enviado para o seu Kindle.');
         
     }
-    bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
-    await postman.sendMailTo('',file_name);
+    const {email} = await ReaderModel.findOne({chatId});
+    if(email){
+        bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
+        await postman.sendMailTo(email,file_name);
+    }else{
+        bot.sendMessage(chatId,'Email não encontrado. Por favor, registre seu email com o comando "/setemail".');
+    }
 })
