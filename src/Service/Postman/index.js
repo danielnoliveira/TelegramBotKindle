@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer');
+const fs = require('fs');
 const {pass_email} = require('./../../../secrets');
 var transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com", // hostname
@@ -21,25 +22,35 @@ var mailOptionsEmpty = {
 var attachmentsEmpty =[{
     filename: '',
     path: '',
-    contentType: 'application/x-mobipocket-ebook '
+    contentType: 'application/x-mobipocket-ebook'
 }];
 
-const sendMailTo = (destinatary,file_name) => {
-
-    var attachments = Object.assign({},attachmentsEmpty);
-    attachments.filename = file_name;
-    attachments.path = `./books/${file_name}`;
-
-    var mailOptions = Object.assign({},mailOptionsEmpty);
-    mailOptions.to = destinatary;
-    mailOptions.attachments = attachments;
-
-    transporter.sendMail(mailOptions,(error, info) => {
-        if(error){
-            console.error(error);
-        }else{
-            console.log(info);
+const sendMailTo = async (destinatary,file_name) => {
+    await fs.readFile(`./books/${file_name}`,async (error,data)=>{
+        if (error) {
+            return console.error(error);
         }
+        console.log('Enviando o arquivo',file_name);
+        var attachments = [{
+            filename: '',
+            content: '',
+            contentType: 'application/x-mobipocket-ebook'
+        }]
+        attachments[0].filename = file_name;
+        attachments[0].content = data;
+        console.log(attachments);
+        var mailOptions = Object.assign({},mailOptionsEmpty);
+        mailOptions.to = destinatary;
+        mailOptions.attachments = attachments;
+        mailOptions.text = 'kindle book';
+        console.log(mailOptions);
+        await transporter.sendMail(mailOptions,(error, info) => {
+            if(error){
+                console.error(error);
+            }else{
+                console.log(info);
+            }
+        });
     });
 }
 
