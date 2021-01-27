@@ -17,19 +17,31 @@ var download = (url,dest) => {
             response.pipe(file);
             file.on('finish', async function() {
                 file.close((err) => { 
-                    if (err) 
+                    if (err){ 
                         console.error('Failed to close file', err);
-                    else { 
+                        reject('fail');
+                    }else { 
                         console.log("\n> File Closed successfully"); 
-                        resolve('Download terminado');
+                        resolve('success');
                     } 
                 });
             });
         });
     });
 }
+var removeFile = async (file_path) => {
+    try {
+        await fs.unlinkSync(file_path);
+        console.log('File removed successfully');
+        return 'success';
+    } catch(err) {
+        console.error(err);
+        return 'fail';
+    }
+}
 module.exports = {
-    download
+    download,
+    removeFile,
 }
 // const main = async ()=>{
 //     await download('https://speed.hetzner.de/100MB.bin','./100MB.bin');
