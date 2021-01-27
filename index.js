@@ -49,4 +49,5 @@ bot.on('document', async (msg)=>{
     }else{
         bot.sendMessage(chatId,'Email não encontrado. Por favor, registre seu email com o comando "/setemail".');
     }
+    await fileManager.removeFile(`./books/${file_name}`);
 })
