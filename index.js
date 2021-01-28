@@ -38,7 +38,7 @@ bot.on('document', async (msg)=>{
     await fileManager.download(getURLcomplete(TELEGRAM_TOKEN,file_path),`./books/${file_name}`);
     if(file_name.slice(-4)==='epub'){
         bot.sendMessage(chatId,'Documento não está em formato mobi. Iniciando conversão para o formato mobi.');
-        await calibre.EbookConverter(file_name);
+        await calibre.EbookConverter('./books/',file_name);
         bot.sendMessage(chatId,'Conversão finalizada.\nO documento está sendo enviado para o seu Kindle.');
         
     }
