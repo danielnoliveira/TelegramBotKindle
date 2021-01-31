@@ -11,6 +11,9 @@
     "start": "nodemon index.js",
     "test":"jest"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "mongoose": "^5.11.12",
     "node-ebook-converter": "^1.0.9",
