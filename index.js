@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-
+const mongoose = require('./src/Database');
 const ReaderModel = require('./src/Database/Model/Readers');
 
 const calibre = require('./src/Service/EbookConverter');
