@@ -28,9 +28,9 @@ bot.onText(/\/setemail/,async (msg)=>{
     const chatId = msg.chat.id;
     const reader = await ReaderModel.findOne({chatId}).exec();
     if (reader) {
-        bot.sendMessage(chatId,);
+        bot.sendMessage(chatId,`Email: ${reader.email}`);
     } else {
-        
+        bot.sendMessage(chatId,'Email não encontrado. Use o comando "/setemail seu_email" para definir o email do kindle.');
     }
 });
 bot.onText(/\/setemail (.+)/,async (msg,match)=>{
