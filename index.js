@@ -16,10 +16,10 @@ const getURLcomplete = (token,file_path)=>{
 
 var port = process.env.PORT || 443,
     host = process.env.HOST,
-    externalUrl = process.env.CUSTOM_ENV_VARIABLE || 'https://my-app.herokuapp.com';
+    externalUrl = 'https://glacial-bastion-14919.herokuapp.com/';
 
 const bot = new TelegramBot(TELEGRAM_TOKEN, {polling:false,webHook:{port,host}});
-bot.setWebHook(externalUrl+':443/bot');
+bot.setWebHook(externalUrl+':443/bot'+TELEGRAM_TOKEN);
 bot.onText(/\/start/,(msg)=>{
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, msgs.start);
