@@ -18,7 +18,7 @@ var port = process.env.PORT || 443,
     host = process.env.HOST,
     externalUrl = process.env.CUSTOM_ENV_VARIABLE || 'https://my-app.herokuapp.com';
 
-const bot = new TelegramBot(TELEGRAM_TOKEN, {polling:true});
+const bot = new TelegramBot(TELEGRAM_TOKEN, {polling:false,webHook:{port,host}});
 bot.setWebHook(externalUrl+':443/bot');
 bot.onText(/\/start/,(msg)=>{
     const chatId = msg.chat.id;
