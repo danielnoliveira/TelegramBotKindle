@@ -24,12 +24,38 @@ bot.onText(/\/start/,(msg)=>{
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, msgs.start);
 });
-bot.onText(/\/setemail (.+)/,(msg,match)=>{
+bot.onText(/\/setemail/,async (msg)=>{
+    const chatId = msg.chat.id;
+    const reader = await ReaderModel.findOne({chatId}).exec();
+    if (reader) {
+        bot.sendMessage(chatId,);
+    } else {
+        
+    }
+});
+bot.onText(/\/setemail (.+)/,async (msg,match)=>{
     const chatId = msg.chat.id;
     const email = match[1];
     if(msg.entities[1].type==="email"){
         bot.sendMessage(chatId,"Esse é um email válido");
-        const newReader = new ReaderModel({email,chatId});
+        if(await ReaderModel.findOne({chatId}).exec()){
+            bot.sendMessage(chatId,'Usuario já encontrado. Atualizando email');
+            const reader = await ReaderModel.findOneAndUpdate({chatId}).exec();
+            if (reader) {
+                bot.sendMessage(chatId,'Email atualizado com sucesso!!!');
+            } else {
+                bot.sendMessage(chatId,'Falhar em atualizar o email. Repita a operação');
+            }
+        }else{
+            const newReader = new ReaderModel({email,chatId});
+            newReader.save()
+            .then(()=>{
+                bot.sendMessage(chatId,'Email Salvo com sucesso')
+            })
+            .catch((err)=>{
+                bot.sendMessage(chatId,'Falhar em salvar o email.Repita a operação')
+            });
+        }
     }else{
         bot.sendMessage(chatId,"Isso não é um email");
     }
@@ -46,10 +72,10 @@ bot.on('document', async (msg)=>{
         bot.sendMessage(chatId,'Conversão finalizada.\nO documento está sendo enviado para o seu Kindle.');
         
     }
-    const {email} = await ReaderModel.findOne({chatId});
-    if(email){
+    const reader = await ReaderModel.findOne({chatId}).exec();
+    if(reader){
         bot.sendMessage(chatId,'O documento está sendo enviado para o seu Kindle');
-        await postman.sendMailTo(email,file_name);
+        await postman.sendMailTo(reader.email,file_name);
     }else{
         bot.sendMessage(chatId,'Email não encontrado. Por favor, registre seu email com o comando "/setemail".');
     }
