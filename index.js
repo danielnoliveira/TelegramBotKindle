@@ -38,9 +38,10 @@ bot.onText(/\/setemail (.+)/,async (msg,match)=>{
     const email = match[1];
     if(msg.entities[1].type==="email"){
         bot.sendMessage(chatId,"Esse é um email válido");
-        if(await ReaderModel.findOne({chatId}).exec()){
+        const reader1 = await ReaderModel.findOne({chatId}).exec();
+        if(reader1){
             bot.sendMessage(chatId,'Usuario já encontrado. Atualizando email');
-            const reader = await ReaderModel.findOneAndUpdate({chatId}).exec();
+            const reader = await ReaderModel.findOneAndUpdate({chatId,email}).exec();
             if (reader) {
                 bot.sendMessage(chatId,'Email atualizado com sucesso!!!');
             } else {
