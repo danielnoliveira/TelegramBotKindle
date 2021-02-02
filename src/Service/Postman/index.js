@@ -26,29 +26,24 @@ var attachmentsEmpty =[{
 }];
 
 const sendMailTo = async (destinatary,file_name) => {
-    await fs.readFile(`./books/${file_name}`,async (error,data)=>{
-        if (error) {
-            return console.error(error);
-        }
-        console.log('Enviando o arquivo',file_name);
+    return new Promise((resolve,reject)=>{
         var attachments = [{
-            filename: '',
-            content: '',
+            path:`./books/${file_name}`,
             contentType: 'application/x-mobipocket-ebook'
         }]
-        attachments[0].filename = file_name;
-        attachments[0].content = data;
-        console.log(attachments);
+            
         var mailOptions = Object.assign({},mailOptionsEmpty);
         mailOptions.to = destinatary;
         mailOptions.attachments = attachments;
         mailOptions.text = 'kindle book';
-        console.log(mailOptions);
-        await transporter.sendMail(mailOptions,(error, info) => {
+        
+        transporter.sendMail(mailOptions,(error, info) => {
             if(error){
                 console.error(error);
+                reject('fail')
             }else{
                 console.log(info);
+                resolve('success');
             }
         });
     });
