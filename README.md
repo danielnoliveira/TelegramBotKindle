@@ -16,6 +16,18 @@
 <p align="center">
     This project is about a telegram bot whose main functions are to receive and send files in mobi format. To access the bot on the telegram just search for <b><em>@MyBooksPostman_bot</em></b>
 </p>
+
+<!-- Techs -->
+
+### Techs
+<ul>
+    <li>mongoose</li>
+    <li>node-ebook-converter</li> 
+    <li>node-telegram-bot-api</li>
+    <li>nodemailer</li>
+    <li>nodemon</li>
+    <li>jest</li>
+</ul>
 <!-- Contact me -->
 
 ### Contact me
