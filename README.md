@@ -10,10 +10,19 @@
     <img src="https://cdn2.hubspot.net/hubfs/208250/Blog_Images/postman.jpg" alt="books postman image"/>
 </p>
 <!-- ABOUT THE PROJECT -->
+
 ### About The Project
 
+<p align="center">
+    This project is about a telegram bot whose main functions are to receive and send files in mobi format. To access the bot on the telegram just search for <b><em>@MyBooksPostman_bot</em></b>
+</p>
 <!-- Contact me -->
+
 ### Contact me
+
+<h5>Email: daniel.n.oliveira@outlook.com</h5>
+<h5>Cell Phone: (88)99627-5951</h5>
+
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
