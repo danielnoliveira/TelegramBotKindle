@@ -4,9 +4,6 @@
     <img src="https://img.shields.io/github/stars/danielnoliveira/TelegramBotKindle"/>
     <img src="https://img.shields.io/github/languages/top/danielnoliveira/TelegramBotKindle" />
     <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/danielnoliveira/TelegramBotKindle">
-    
-
-![Heroku](https://pyheroku-badge.herokuapp.com/?app=glacial-bastion-14919&style=flat)
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/danielnoliveira/TelegramBotKindle">
 	
@@ -17,6 +14,8 @@
   <a href="https://github.com/danielnoliveira/TelegramBotKindle/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/danielnoliveira/TelegramBotKindle">
   </a>
+  
+  ![Heroku](https://pyheroku-badge.herokuapp.com/?app=glacial-bastion-14919&style=flat)
 </p>
 <p align="center">
     <h3 align="center">MyBooksPostman: A Telegram bot</h3> 
