@@ -24,7 +24,7 @@ bot.onText(/\/start/,(msg)=>{
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, msgs.start);
 });
-bot.onText(/\/setemail/,async (msg)=>{
+bot.onText(/^\/setemail$/,async (msg)=>{
     const chatId = msg.chat.id;
     const reader = await ReaderModel.findOne({chatId}).exec();
     if (reader) {
