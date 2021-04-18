@@ -8,7 +8,7 @@ const postman = require('./src/Service/Postman');
 
 const msgs = require('./src/DefaultTexts/msgs');
 
-const {TELEGRAM_TOKEN} = require('./secrets');
+const {TELEGRAM_TOKEN,admin_token} = require('./secrets');
 
 const getURLcomplete = (token,file_path)=>{
     return `https://api.telegram.org/file/bot${token}/${file_path}`;
@@ -83,3 +83,29 @@ bot.on('document', async (msg)=>{
     }
     await fileManager.removeFile(`./books/${file_name}`);
 })
+
+const wrongsAcess = {}
+const blacklist = [];
+
+bot.on(/\/newsmessage (\d+) (.+)/, async (msg) => {
+    const chatId = msg.chat.id;
+    
+    if(blacklist.includes(chatId)){
+        return bot.sendMessage(chatId, 'Usuario sem direitos de admin, foi mal ai mano(a)!!!');
+    }
+
+    const adtoken = '' + msg.match[1];
+    const news = msg.match[2];
+
+    if(adtoken !== admin_token){
+        wrongsAcess[chatId] = wrongsAcess[chatId] ? wrongsAcess[chatId]+1 : 1;
+        wrongsAcess[chatId] === 3 && blacklist.push(chatId);
+        return bot.sendMessage(chatId, `ADMIN TOKEN ERRADO, TENTE NOVAMENTE!!! *restam ${3-wrongsAcess[chatId]}`);
+    }
+
+    const readers = await ReaderModel.find();
+    for(var r of readers){
+        bot.sendMessage(r.chatId, news);
+    }
+    
+});
